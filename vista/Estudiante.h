@@ -113,14 +113,14 @@ public: //constructor
 		   ConexionDB cn = ConexionDB();
 		   cn.abrir_conexion();
 		   if (cn.getConector()) {
-
+			   string id_e = to_string(id_estudiante);
 			   string t = to_string(telefono);
 			   string id_ts = to_string(id_tipo_sangre);
-			   string consulta = "update estudiantes set codigo = '" + codigo + "' , nombres = '" + nombres + "', apellidos = '" + apellidos + "', direccion = '" + direccion + "', telefono = " + t + " , fecha_nacimiento '" + fecha_nacimiento + "', id_tipo_sangre =  " + id_ts + " where id_estudiante = " + to_string(id_estudiante) + ";";
+			   string consulta = "update estudiantes set codigo = '" + codigo + "' , nombres = '" + nombres + "', apellidos = '" + apellidos + "', direccion = '" + direccion + "', telefono = " + t + " , fecha_nacimiento '" + fecha_nacimiento + "', id_tipo_sangre =  " + id_ts + " where id_estudiante = "+id_e+ "";
 			   const char* c = consulta.c_str();
 			   q_estado = mysql_query(cn.getConector(), c);
 			   if (!q_estado) {
-				   cout << "Registro Exitoso" << endl;
+				   cout << "Modificacion Exitoso" << endl;
 			   }
 			   else {
 				   cout << "Error al registrar" << endl;
@@ -134,7 +134,31 @@ public: //constructor
 
 
 	   }
-	   void borrar() {}
+	   void borrar() {
 
+		   int q_estado = 0;
+		   ConexionDB cn = ConexionDB();
+		   cn.abrir_conexion();
+		   if (cn.getConector()) {
+			   string id_e = to_string(id_estudiante);
+			   string t = to_string(telefono);
+			   string id_ts = to_string(id_tipo_sangre);
+			   string consulta = "delet from estudiantes  where id_estudiante = " + id_e + "";
+			   const char* c = consulta.c_str();
+			   q_estado = mysql_query(cn.getConector(), c);
+			   if (!q_estado) {
+				   cout << "eliminacion de datos Exitoso" << endl;
+			   }
+			   else {
+				   cout << "Error al registrar" << endl;
+			   }
+		   }
+		   else {
+			   cout << "Error de conexion" << endl;
+		   }
+		   cn.cerrar_conexion();
+
+
+	   }
 
 };
